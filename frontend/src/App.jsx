@@ -1,7 +1,17 @@
+import AboutUs from "./components/AboutUs";
+import Activities from "./components/Activities";
+import Donation from "./components/Donation";
+import DonationForm from "./components/DonationForm";
+import Testimonials from "./components/Testimonials";
+
 export default function App() {
   return (
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
+   <>
+   <Donation/>
+   <Activities/>
+   <DonationForm/>
+   <AboutUs/>
+   <Testimonials/>
+   </>
   )
 }
