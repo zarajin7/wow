@@ -1,9 +1,7 @@
 from django.db import models
 
 # Create your models here.
-# donations/models.py
-
-from django.db import models
+# donations/
 
 class Donation(models.Model):
     ONE_TIME = 'One-Time'
@@ -32,11 +30,11 @@ class Donation(models.Model):
     cover_fees = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
+    def __str__(self, **extra_fields):
         return f"{self.amount} USD for {self.purpose} ({self.donation_type})"
 
 
-# activities/models.py
+# activities/
 
 from django.db import models
 
@@ -46,5 +44,17 @@ class Activity(models.Model):
     image_url = models.URLField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
+    def __str__(self, **extra_fields):
         return self.title
+
+#Testimonials
+class Testimonial(models.Model):
+    name = models.CharField(max_length=100)
+    title = models.CharField(max_length=100)
+    image = models.URLField(max_length=200)
+    message = models.TextField()
+
+    def __str__(self, **extra_fields):
+        return self.name
+
+
