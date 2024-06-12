@@ -2,7 +2,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "../pages/Home";
 import Layout from "../pages/Layout";
 import Authentication from "../pages/Authentication";
-import Login from "./Login";
+import Login from "../pages/Login";
+import Dashboard from "../pages/Dashboard";
 function Router(){
     return(
       
@@ -34,6 +35,16 @@ function Router(){
               <Layout>
                 <Login />
               </Layout>
+            }
+          />
+
+
+<Route
+            path="/dash"
+            element={
+            
+                <Dashboard />
+             
             }
           />
           </Routes>
