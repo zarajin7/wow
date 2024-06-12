@@ -148,7 +148,7 @@ function Signup() {
 
                 <div className="flex   text-[20px] my-2">
                 <p>Have An Account ?</p>
-                <a href="/lesson" className="text-amber-300">
+                <a href="/login" className="text-amber-300">
                   Login  
                 </a>
               </div>

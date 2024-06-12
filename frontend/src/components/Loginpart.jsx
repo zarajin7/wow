@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function Login() {
+function Loginpart() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -119,15 +119,15 @@ function Login() {
           <div className="flex justify-center">
             <img
               className="w-[10vh] outline-1"
-              src="src/assets/images/google.jpg"
+              src="src/assets/wow_ pics/google.jpg"
             />
             <img
               className="w-[10vh]"
-              src="src/assets/images/facebook-color-icon-2048x2048-bfly1vxr.png"
+              src="src/assets/wow_ pics/facebook-color-icon-2048x2048-bfly1vxr.png"
             />
             <img
               className="w-[10vh]"
-              src="src/assets/images/circle-linkedin-512.webp"
+              src="src/assets/wow_ pics/circle-linkedin-512.webp"
             />
           </div>
           <div className="flex text-center  text-[20px] my-2">
@@ -140,8 +140,8 @@ function Login() {
             <img src="src/assets/images/istockphoto-1323623361-612x612.jpg" />
           </div>
         </form>
-      {/* )} */}
+   
     </div>
   );
 }
-export default Login
+export default Loginpart
