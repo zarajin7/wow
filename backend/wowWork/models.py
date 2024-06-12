@@ -1,6 +1,14 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
+
+class CustomUser(AbstractUser):
+    pass
+
+    def __str__(self):
+        return self.email
+
 # donations/
 
 class Donation(models.Model):
@@ -30,7 +38,7 @@ class Donation(models.Model):
     cover_fees = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self, **extra_fields):
+    def __str__(self, **extra_kwargs):
         return f"{self.amount} USD for {self.purpose} ({self.donation_type})"
 
 
@@ -44,7 +52,7 @@ class Activity(models.Model):
     image_url = models.URLField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self, **extra_fields):
+    def __str__(self, **extra_kwargs):
         return self.title
 
 #Testimonials
@@ -54,7 +62,7 @@ class Testimonial(models.Model):
     image = models.URLField(max_length=200)
     message = models.TextField()
 
-    def __str__(self, **extra_fields):
+    def __str__(self, **extra_kwargs):
         return self.name
 
 
