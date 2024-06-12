@@ -1,4 +1,7 @@
 from django.urls import path
+
+
+
 from .views import RegistrationView, LoginView, ActivityAPIView, ActivityDetailAPIView, DonationAPIView,TestimonialAPIView
 
 urlpatterns = [
@@ -11,3 +14,4 @@ urlpatterns = [
 
 
 ]
+

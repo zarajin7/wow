@@ -8,7 +8,6 @@ from .models import Donation, Activity
 from .serializers import CustomUserSerializer, DonationSerializer, ActivitySerializer, UserSerializer, LoginSerializer,TestimonialSerializer
 # Create your views here.
 
-
 class CustomUserView(APIView):
     def get(self, request, id=None, format=None):
         if id:
