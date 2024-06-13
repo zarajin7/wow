@@ -7,80 +7,68 @@ import Dashboard from "../pages/Dashboard";
 import DonationPart from "../pages/Donationpart";
 import Donations from "../pages/Donations";
 import Activitiess from "../pages/Activitess";
-function Router(){
-    return(
-      
-         <BrowserRouter>
-        <Routes>
-          <Route
-            path="/"
-            element={
-          <Layout>
-                <Home/>
-                </Layout>
-            }
-          />
-
-
-
-<Route
-            path="/auth"
-            element={
-              <Layout>
-                <Authentication />
-              </Layout>
-            }
-          />
-
-<Route
-            path="/login"
-            element={
-              <Layout>
-                <Login />
-              </Layout>
-            }
-          />
-
-
-<Route
-            path="/dash"
-            element={
-            
-                <Dashboard />
-             
-            }
-          />
-
-<Route
-            path="/donate"
-            element={
+function Router() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={
             <Layout>
-                <DonationPart />
-                </Layout>
-            }
-          />
+              <Home />
+            </Layout>
+          }
+        />
 
-<Route
-            path="/don"
-            element={
+        <Route
+          path="/auth"
+          element={
             <Layout>
-                <Donations/>
-                </Layout>
-            }
-          />
+              <Authentication />
+            </Layout>
+          }
+        />
 
-<Route
-            path="/active"
-            element={
+        <Route
+          path="/login"
+          element={
             <Layout>
-                <Activitiess/>
-                </Layout>
-            }
-          />
-          </Routes>
-          </BrowserRouter>
-        
-    )
+              <Login />
+            </Layout>
+          }
+        />
+
+        <Route path="/dash" element={<Dashboard />} />
+
+        <Route
+          path="/donate"
+          element={
+            <Layout>
+              <DonationPart />
+            </Layout>
+          }
+        />
+
+        <Route
+          path="/don"
+          element={
+            <Layout>
+              <Donations />
+            </Layout>
+          }
+        />
+
+        <Route
+          path="/active"
+          element={
+            <Layout>
+              <Activitiess />
+            </Layout>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default Router
+export default Router;
