@@ -33,7 +33,7 @@ function Signup() {
         console.log(res);
         if (!res.ok) {
           return res.json().then(message => {
-            setFormError(message.email[0]);
+            setFormError(message.email[""]);
           });
         }
         return res.json();
@@ -131,7 +131,7 @@ function Signup() {
                 className="bg-red-600 py-3  px-[15em] rounded-full shadow-lg text-black font-bold"
                 type="submit"
               >
-               sign in
+               sign up
               </button>
 
               <div className="align-middle">
@@ -143,7 +143,7 @@ function Signup() {
                   onClick={(e) => handleLogin(e)}
 
                 >
-                 sign in with google
+                 sign up with google
                 </button>
 
                 <div className="flex   text-[20px] my-2">
