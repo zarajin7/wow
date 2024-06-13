@@ -26,6 +26,10 @@ SECRET_KEY = 'django-insecure-b&)g971eoeo1lbxj*a5^hhzdujcr7u1o^u3qkzdfsxr8rh8fsr
 DEBUG = True
 
 ALLOWED_HOSTS = []
+CORS_ORIGIN_WHITELIST=[
+    'http://localhost:5173'
+]
+
 
 
 # Application definition
@@ -39,10 +43,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
-    'wowWork'
+    'wowWork',
+    "corsheaders",
+
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -81,7 +88,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'wow',
         'USER':'postgres',
-        'PASSWORD':'kimnamjoon'
+        'PASSWORD':'Boazbbb1'
 
     }
 }
@@ -112,9 +119,9 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
     ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
+    # 'DEFAULT_PERMISSION_CLASSES': (
+    #     'rest_framework.permissions.IsAuthenticated',
+    # ),
 }
 
 # Internationalization
