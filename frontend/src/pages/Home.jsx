@@ -1,10 +1,8 @@
-
-function Home(){
-    return(
-        <>
-        
-       <h1 className="text-red-500">Hello</h1> 
-        </>
-    )
+function Home() {
+  return (
+    <>
+      <h1 className="text-red-500">Hello</h1>
+    </>
+  );
 }
-export default Home
+export default Home;
