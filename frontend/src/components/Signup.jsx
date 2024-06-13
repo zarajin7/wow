@@ -33,7 +33,7 @@ function Signup() {
         console.log(res);
         if (!res.ok) {
           return res.json().then((message) => {
-            setFormError(message.email[0]);
+            setFormError(message.email['']);
           });
         }
         return res.json();
