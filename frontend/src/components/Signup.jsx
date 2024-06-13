@@ -32,8 +32,8 @@ function Signup() {
       .then((res) => {
         console.log(res);
         if (!res.ok) {
-          return res.json().then((message) => {
-            setFormError(message.email[0]);
+          return res.json().then(message => {
+            setFormError(message.email[""]);
           });
         }
         return res.json();
@@ -67,12 +67,13 @@ function Signup() {
   };
 
   return (
+    <>
+        <form onSubmit={handleSubmit}>
     <div className="container mx-auto  flex justify-center my-9 ">
       <h1 className="text-6xl font-normal ">Sign up here</h1>
 
       <div className="container  my-8 ">
         {formError && <p className="text-red-700">{formError}</p>}
-        <form onSubmit={handleSubmit}>
           <div className="my-[3em]">
             <p>firstname</p>
             <input
@@ -126,7 +127,40 @@ function Signup() {
               {errors.password && (
                 <p className="text-red-700">{errors.password}</p>
               )}
+              </div>
+              <button
+                className="bg-red-600 py-3  px-[15em] rounded-full shadow-lg text-black font-bold"
+                type="submit"
+              >
+               sign up
+              </button>
+
+              <div className="align-middle">
+                <p>Or</p>
+                </div>
+
+                <button
+                className="bg-red-600 py-3  px-[12em] rounded-full shadow-lg text-black font-bold"
+                  onClick={(e) => handleLogin(e)}
+
+                >
+                 sign up with google
+                </button>
+
+                <div className="flex   text-[20px] my-2">
+                <p>Have An Account ?</p>
+                <a href="/login" className="text-amber-300">
+                  Login  
+                </a>
+              </div>
+
+              <div className="flex justify-end absolute top-8 right-10 z-[-1]">
+                    <img src="src/assets/images/online-form-application-filling-on-600nw-2265375031.webp"/>
+                </div>
+
+            
             </div>
+
           </div>
           <button
             className="bg-red-600 py-3  px-[15em] rounded-full shadow-lg text-black font-bold"
@@ -156,9 +190,10 @@ function Signup() {
           <div className="flex justify-end absolute top-8 right-10 z-[-1]">
             <img src="src/assets/images/online-form-application-filling-on-600nw-2265375031.webp" />
           </div>
-        </form>
+       
       </div>
-    </div>
+    </form>
+    </>
   );
 }
 export default Signup;
