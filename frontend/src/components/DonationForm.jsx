@@ -34,9 +34,9 @@ const DonationPage = () => {
       >
         <div className="flex justify-center mb-4">
           <img
-            src="path/to/your/logo.png"
+            src="src/assets/wow_ pics/WOW.svg"
             alt="Logo"
-            className="w-20 h-20 object-cover rounded-full"
+            className="h-20 object-cover rounded-full"
           />
         </div>
         <h2 className="text-2xl font-bold text-center mb-4">
@@ -89,7 +89,7 @@ const DonationPage = () => {
           <select
             value={donationPurpose}
             onChange={(e) => setDonationPurpose(e.target.value)}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-700"
           >
             <option value="Make donation anonymous">
               Make donation anonymous
@@ -129,10 +129,10 @@ const DonationPage = () => {
         <div className="flex flex-col space-y-4">
           <button
             type="submit"
-            className="bg-yellow-500 text-white px-4 py-2 rounded-lg flex items-center justify-center"
+            className="bg-amber-300 text-white px-4 py-2 rounded-lg flex items-center justify-center"
           >
             <img
-              src="path/to/paypal_logo.png"
+              src="src/assets/wow_ pics/15-facts-about-paypal-1694962132.jpg"
               alt="PayPal"
               className="w-6 h-6 mr-2"
             />{" "}
@@ -140,7 +140,7 @@ const DonationPage = () => {
           </button>
           <button
             type="submit"
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg"
+            className="bg-red-700 text-white px-4 py-2 rounded-lg"
           >
             Donate with Debit or Credit Card
           </button>

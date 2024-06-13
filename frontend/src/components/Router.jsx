@@ -4,6 +4,9 @@ import Layout from "../pages/Layout";
 import Authentication from "../pages/Authentication";
 import Login from "../pages/Login";
 import Dashboard from "../pages/Dashboard";
+import DonationPart from "../pages/Donationpart";
+import Donations from "../pages/Donations";
+import Activitiess from "../pages/Activitess";
 function Router() {
   return (
     <BrowserRouter>
@@ -36,6 +39,33 @@ function Router() {
         />
 
         <Route path="/dash" element={<Dashboard />} />
+
+        <Route
+          path="/donate"
+          element={
+            <Layout>
+              <DonationPart />
+            </Layout>
+          }
+        />
+
+        <Route
+          path="/don"
+          element={
+            <Layout>
+              <Donations />
+            </Layout>
+          }
+        />
+
+        <Route
+          path="/active"
+          element={
+            <Layout>
+              <Activitiess />
+            </Layout>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

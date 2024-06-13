@@ -32,8 +32,8 @@ function Signup() {
       .then((res) => {
         console.log(res);
         if (!res.ok) {
-          return res.json().then((message) => {
-            setFormError(message.email['']);
+          return res.json().then(message => {
+            setFormError(message.email[""]);
           });
         }
         return res.json();
@@ -87,64 +87,64 @@ function Signup() {
             )}
           </div>
 
-          <div className="my-[3em]">
-            <p>lastname</p>
-            <input
-              className="border py-3 px-[10em] bg-white  rounded-full flex-1 shadow-lg"
-              type="text"
-              name="lastname"
-              placeholder="Enter your last name"
-              onChange={handleInputChange}
-            />
-            {errors.lastname && (
-              <p className="text-red-700">{errors.lastname}</p>
-            )}
-          </div>
+                <div className="my-[3em]">
+                <p>lastname</p>
+                  <input
+                    className="border py-3 px-[10em] bg-white  rounded-full flex-1 shadow-lg"
+                    type="text"
+                    name="lastname"
+                    placeholder="Enter your last name"
+                    onChange={handleInputChange}
+                  />
+                  {errors.lastname && <p className="text-red-700">{errors.lastname}</p>}
+                </div>
+             
+            
+                <div className="my-[3em]">
+                <p>email</p>
+                  <input
+                    className="border py-3 px-[10em] bg-white  rounded-full flex-1 shadow-lg "
+                    type="text"
+                    name="email"
+                    placeholder="Enter your email"
+                    onChange={handleInputChange}
+                  />
+                  {errors.email && <p className="text-red-700">{errors.email}</p>}
+                </div>
 
-          <div className="my-[3em]">
-            <p>email</p>
-            <input
-              className="border py-3 px-[10em] bg-white  rounded-full flex-1 shadow-lg "
-              type="text"
-              name="email"
-              placeholder="Enter your email"
-              onChange={handleInputChange}
-            />
-            {errors.email && <p className="text-red-700">{errors.email}</p>}
-          </div>
+           
+                <div className="my-[3em]">
+                <div>
+                  <p>password</p>
+                  <input
+                    className="border py-3 px-[10em] bg-white  rounded-full flex-1 shadow-lg"
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    onChange={handleInputChange}
+                  />
+                  {errors.password && <p className="text-red-700">{errors.password}</p>}
+                </div>
 
-          <div className="my-[3em]">
-            <div>
-              <p>password</p>
-              <input
-                className="border py-3 px-[10em] bg-white  rounded-full flex-1 shadow-lg"
-                type="password"
-                name="password"
-                placeholder="Password"
-                onChange={handleInputChange}
-              />
-              {errors.password && (
-                <p className="text-red-700">{errors.password}</p>
-              )}
-            </div>
-          </div>
-          <button
-            className="bg-red-600 py-3  px-[15em] rounded-full shadow-lg text-black font-bold"
-            type="submit"
-          >
-            sign in
-          </button>
+              </div>
+              <button
+                className="bg-red-600 py-3  px-[15em] rounded-full shadow-lg text-black font-bold"
+                type="submit"
+              >
+               sign in
+              </button>
 
           <div className="align-middle">
             <p>Or</p>
           </div>
 
-          <button
-            className="bg-red-600 py-3  px-[12em] rounded-full shadow-lg text-black font-bold"
-            onClick={(e) => handleLogin(e)}
-          >
-            sign in with google
-          </button>
+                <button
+                className="bg-red-600 py-3  px-[12em] rounded-full shadow-lg text-black font-bold"
+                  onClick={(e) => handleLogin(e)}
+
+                >
+                 sign in with google
+                </button>
 
           <div className="flex   text-[20px] my-2">
             <p>Have An Account ?</p>
