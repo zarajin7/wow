@@ -32,11 +32,7 @@ function Signup() {
       .then(res => {
         console.log(res);
         if (!res.ok) {
-<<<<<<< HEAD
           return res.json().then(message => {
-=======
-          return res.json().then((message) => {
->>>>>>> efa22700aac715948a36e0d7543da52bf1ac6953
             setFormError(message.email[""]);
           });
         }
