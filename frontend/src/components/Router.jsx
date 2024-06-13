@@ -7,6 +7,7 @@ import Dashboard from "../pages/Dashboard";
 import DonationPart from "../pages/Donationpart";
 import Donations from "../pages/Donations";
 import Activitiess from "../pages/Activitess";
+
 function Router() {
   return (
     <BrowserRouter>
@@ -66,6 +67,8 @@ function Router() {
             </Layout>
           }
         />
+
+
       </Routes>
     </BrowserRouter>
   );
