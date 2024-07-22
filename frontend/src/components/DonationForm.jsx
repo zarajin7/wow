@@ -1,3 +1,6 @@
+
+import React, { useState, useEffect } from "react";
+import QRCode from "qrcode.react";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -8,11 +11,14 @@ const DonationPage = () => {
   const [coverFees, setCoverFees] = useState(false);
   const [campaigns, setCampaigns] = useState([]);
   const [selectedCampaign, setSelectedCampaign] = useState("");
+  const [qrCodeUrl, setQrCodeUrl] = useState("");
+
 
   useEffect(() => {
     // Fetch campaigns from the API
     const fetchCampaigns = async () => {
       try {
+
         const response = await axios.get("http://localhost:8000/api/campaigns/");
         setCampaigns(response.data);
       } catch (error) {
@@ -33,6 +39,7 @@ const DonationPage = () => {
           donation_type: donationType,
           purpose: donationPurpose,
           cover_fees: coverFees,
+
           campaign_id: selectedCampaign,
         }
       );
@@ -43,13 +50,13 @@ const DonationPage = () => {
       });
       alert("Donation successful!");
     } catch (error) {
-      console.error(error);
+      console.error("Donation failed:", error);
       alert("Donation failed.");
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="flex flex-col items-center min-h-screen bg-gray-100 p-4">
       <form
         onSubmit={handleSubmit}
         className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md"
@@ -182,6 +189,21 @@ const DonationPage = () => {
           </button>
         </div>
       </form>
+
+      {/* QR Code Section */}
+      {qrCodeUrl && (
+        <div className="mt-8 bg-white p-4 rounded-lg shadow-lg w-full max-w-md">
+          <h3 className="text-xl font-bold mb-4 text-center">
+            Scan to Complete Payment
+          </h3>
+          <div className="flex justify-center mb-4">
+            <QRCode value={qrCodeUrl} size={256} />
+          </div>
+          <p className="text-center">
+            Use your mobile app to scan the QR code and complete the payment.
+          </p>
+        </div>
+      )}
     </div>
   );
 };
