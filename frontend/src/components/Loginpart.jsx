@@ -52,8 +52,8 @@ function Login() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-purple-600 p-6 rounded-lg shadow-lg text-center">
-        <h2 className="text-white text-2xl mb-4">Sign In</h2>
+      <div className="bg-amber-300 p-6 rounded-lg shadow-lg text-center">
+        <h2 className="text-black text-2xl mb-4">Sign In</h2>
         <form onSubmit={handleSubmit}>
           <input
             type="email"
@@ -63,7 +63,7 @@ function Login() {
             value={formData.email}
             onChange={handleChange}
           />
-          {errors.email && <p className="text-red-500 mt-1">{errors.email}</p>}
+          {errors.email && <p className="text-red-700 mt-1">{errors.email}</p>}
           <input
             type="password"
             name="password"
@@ -73,19 +73,19 @@ function Login() {
             onChange={handleChange}
           />
           {errors.password && (
-            <p className="text-red-500 mt-1">{errors.password}</p>
+            <p className="text-red-700 mt-1">{errors.password}</p>
           )}
           {errorMessage && <p className="text-red-500 mt-1">{errorMessage}</p>}
           <button
             type="submit"
-            className="bg-gray-800 text-white px-8 py-2 rounded-lg"
+            className="bg-red-700 text-black px-8 py-2 rounded-lg"
           >
             Login
           </button>
         </form>
-        <p className="text-white mt-4">
+        <p className="text-black mt-4">
           Don’t have an account?{" "}
-          <Link to="/signup" className="underline">
+          <Link to="/auth" className="underline">
             Register
           </Link>
         </p>

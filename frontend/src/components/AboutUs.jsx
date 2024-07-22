@@ -9,11 +9,9 @@ const AboutUs = () => {
         </div>
         <div className="bg-white shadow-lg rounded-lg p-8">
           <h2 className="flex items-center justify-around text-2xl font-semibold text-gray-800">
-            VMM Africa t/a Association of Mission Volunteers
+            WORLD OF WORK
           </h2>
-          <h3 className="text-xl font-semibold text-gray-700 mt-4">
-            World of Work (WOW) Programme – Kitale Kenya
-          </h3>
+        
           <p className="mt-4 text-gray-600">
             World of Work is a project of VMM Africa trading as Association of
             Mission Volunteers (AMV). It is a project which piloted in Kitale

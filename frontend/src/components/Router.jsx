@@ -7,6 +7,8 @@ import Dashboard from "../pages/Dashboard";
 import DonationPart from "../pages/Donationpart";
 import Donations from "../pages/Donations";
 import Activitiess from "../pages/Activitess";
+import Admindash from "./Admindash";
+import Donordash from "./Donordash";
 
 function Router() {
   return (
@@ -64,6 +66,35 @@ function Router() {
           element={
             <Layout>
               <Activitiess />
+            </Layout>
+          }
+        />
+
+<Route
+          path="/dash"
+          element={
+            <Layout>
+              <Dashboard />
+            </Layout>
+          }
+        />
+
+
+<Route
+          path="/admin"
+          element={
+            <Layout>
+              <Admindash />
+            </Layout>
+          }
+        />
+
+
+<Route
+          path="/ddash"
+          element={
+            <Layout>
+              <Donordash />
             </Layout>
           }
         />

@@ -12,7 +12,7 @@ function Landing(){
           </h1>
 
           <div>
-            <Link to="/don"><button className="border bg-red-700 text-black  px-[3em] py-[1em] outline-none rounded-lg p-3">
+            <Link to="/don"><button className="border bg-amber-300 text-black  px-[3em] py-[1em] outline-none rounded-lg p-3">
               Donate
             </button></Link>
           </div>
