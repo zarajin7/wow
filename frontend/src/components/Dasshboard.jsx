@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Link } from 'react-router-dom';
 
 const Dasshboard = ({ organizations }) => {
@@ -27,7 +28,7 @@ const Dasshboard = ({ organizations }) => {
             </Link>
           </div>
         </div>
-      </div>
+     </div>
     </div>
   );
 };
