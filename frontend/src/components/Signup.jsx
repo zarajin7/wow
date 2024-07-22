@@ -68,8 +68,8 @@ function Signup() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-purple-600 p-6 rounded-lg shadow-lg text-center">
-        <h2 className="text-white text-2xl mb-4">Sign Up</h2>
+      <div className="bg-amber-300 p-6 rounded-lg shadow-lg text-center">
+        <h2 className="text-black text-2xl mb-4">Sign Up</h2>
         <form onSubmit={handleSubmit}>
           <input
             type="text"
@@ -80,7 +80,7 @@ function Signup() {
             onChange={handleInputChange}
           />
           {errors.first_name && (
-            <p className="text-red-500 mt-1">{errors.first_name}</p>
+            <p className="text-red-700 mt-1">{errors.first_name}</p>
           )}
           <input
             type="text"
@@ -91,7 +91,7 @@ function Signup() {
             onChange={handleInputChange}
           />
           {errors.last_name && (
-            <p className="text-red-500 mt-1">{errors.last_name}</p>
+            <p className="text-red-700 mt-1">{errors.last_name}</p>
           )}
           <input
             type="email"
@@ -101,7 +101,7 @@ function Signup() {
             value={formData.email}
             onChange={handleInputChange}
           />
-          {errors.email && <p className="text-red-500 mt-1">{errors.email}</p>}
+          {errors.email && <p className="text-red-700 mt-1">{errors.email}</p>}
           <input
             type="password"
             name="password"
@@ -111,17 +111,17 @@ function Signup() {
             onChange={handleInputChange}
           />
           {errors.password && (
-            <p className="text-red-500 mt-1">{errors.password}</p>
+            <p className="text-red-700 mt-1">{errors.password}</p>
           )}
           <button
             type="submit"
-            className="bg-gray-800 text-white px-4 py-2 rounded-lg"
+            className="bg-red-700 text-black px-4 py-2 rounded-lg"
           >
             {" "}
             Register{" "}
           </button>
         </form>
-        <p className="text-white mt-4">
+        <p className="text-black mt-4">
           Already have an account?{" "}
           <Link to="/login" className="underline">
             {" "}

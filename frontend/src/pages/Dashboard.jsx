@@ -1,8 +1,8 @@
-import Dash from "../components/Dash"
+import Dasshboard from "../components/Dasshboard"
 function Dashboard(){
     return(
         <>
-        <Dash/>
+        <Dasshboard/>
         </>
     )
 }
