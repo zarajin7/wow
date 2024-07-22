@@ -1,6 +1,6 @@
 
 from rest_framework import serializers
-from .models import Donation, Activity, Testimonial, CustomUser
+from .models import Donation, Activity, Testimonial, CustomUser, Campaign, Donation
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 
@@ -54,6 +54,15 @@ class DonationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Donation
         fields = ['id', 'amount', 'donation_type', 'purpose', 'cover_fees', 'created_at']
+
+class CampaignSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Campaign
+        fields = ['id', 'name', 'target', 'collected', 'image']
+class DonationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Donation
+        fields = ['id', 'amount', 'donation_type', 'purpose', 'cover_fees', 'campaign']
 
 class ActivitySerializer(serializers.ModelSerializer):
     class Meta:
