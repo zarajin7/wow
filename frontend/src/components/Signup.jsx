@@ -1,165 +1,136 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Signup() {
+  const navigate = useNavigate(); 
   const [formData, setFormData] = useState({
-    firstname: "",
-    lastname: "",
+    first_name: "",
+    last_name: "",
     email: "",
     password: "",
   });
   const [errors, setErrors] = useState({});
-  const [formError, setFormError] = useState("");
-  const navigate = useNavigate();
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    validate(); 
-    const url = 'http://127.0.0.1:8000/api/registration/';
-    const options = {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData)
-    };
-    fetch(url, options)
-      .then(res => {
-        console.log(res);
-        if (!res.ok) {
-          return res.json().then(message => {
-            setFormError(message.email[""]);
-          });
-        }
-        return res.json();
-      })
-      .then(data => {
-        console.log(data);
-        if (data !== undefined) {
-          navigate('/Login');
-        }
-      })
-      .catch(error => console.error('error registering user:', error));
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
   const validate = () => {
-    const newErrors = {};
+    let tempErrors = {};
+    if (!formData.first_name) tempErrors.first_name = "First Name is required";
+    if (!formData.last_name) tempErrors.last_name = "Last Name is required";
+    if (!formData.email) tempErrors.email = "Email Address is required";
+    if (!formData.password) tempErrors.password = "Password is required";
+    setErrors(tempErrors);
+    return Object.keys(tempErrors).length === 0;
+  };
 
-    if (!formData.firstname) {
-      newErrors.firstname = "First name is required";
-    }
-    if (!formData.lastname) {
-      newErrors.lastname = "Last name is required";
-    }
-    if (!formData.email) {
-      newErrors.email = "Email is required";
-    }
-    if (!formData.password) {
-      newErrors.password = "Password is required";
-    }
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (validate()) {
+      const url = "http://127.0.0.1:8000/api/registration/";
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      };
 
-    setErrors(newErrors);
+      fetch(url, options)
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error("Failed to register user.");
+          }
+          return res.json();
+        })
+        .then((data) => {
+          console.log(data);
+          if (
+            data.error &&
+            data.error === "user with this email already exists."
+          ) {
+            setErrors({ email: data.error });
+          } else {
+            setErrors({});
+            navigate("/login");
+          }
+        })
+        .catch((error) => console.error("Error registering user:", error));
+    } else {
+      console.log("Form validation failed.");
+    }
   };
 
   return (
-      <div className="container mx-auto  flex justify-center my-9 ">
-        <h1 className="text-6xl font-normal ">Sign up here</h1>
-      
-        <div className="container  my-8 ">
-           
-            {formError && <p className="text-red-700">{formError}</p>}
-            <form onSubmit={handleSubmit}>
-             
-                <div className="my-[3em]">
-                <p>firstname</p>
-                  <input
-                    className="border py-3 px-[10em] bg-white  rounded-full flex-1 shadow-lg"
-                    type="text"
-                    name="firstname"
-                    placeholder="Enter your first name"
-                    onChange={handleInputChange}
-                  />
-                  {errors.firstname && <p className="text-red-700">{errors.firstname}</p>}
-                </div>
-
-                <div className="my-[3em]">
-                <p>lastname</p>
-                  <input
-                    className="border py-3 px-[10em] bg-white  rounded-full flex-1 shadow-lg"
-                    type="text"
-                    name="lastname"
-                    placeholder="Enter your last name"
-                    onChange={handleInputChange}
-                  />
-                  {errors.lastname && <p className="text-red-700">{errors.lastname}</p>}
-                </div>
-             
-            
-                <div className="my-[3em]">
-                <p>email</p>
-                  <input
-                    className="border py-3 px-[10em] bg-white  rounded-full flex-1 shadow-lg "
-                    type="text"
-                    name="email"
-                    placeholder="Enter your email"
-                    onChange={handleInputChange}
-                  />
-                  {errors.email && <p className="text-red-700">{errors.email}</p>}
-                </div>
-
-           
-                <div className="my-[3em]">
-                <div>
-                  <p>password</p>
-                  <input
-                    className="border py-3 px-[10em] bg-white  rounded-full flex-1 shadow-lg"
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    onChange={handleInputChange}
-                  />
-                  {errors.password && <p className="text-red-700">{errors.password}</p>}
-                </div>
-
-              </div>
-              <button
-                className="bg-red-600 py-3  px-[15em] rounded-full shadow-lg text-black font-bold"
-                type="submit"
-              >
-               sign up
-              </button>
-
-              <div className="align-middle">
-                <p>Or</p>
-                </div>
-
-                <button
-                className="bg-red-600 py-3  px-[12em] rounded-full shadow-lg text-black font-bold"
-                  onClick={(e) => handleLogin(e)}
-
-                >
-                 sign up with google
-                </button>
-
-                <div className="flex   text-[20px] my-2">
-                <p>Have An Account ?</p>
-                <a href="/login" className="text-amber-300">
-                  Login  
-                </a>
-              </div>
-
-              <div className="flex justify-end absolute top-8 right-10 z-[-1]">
-                    <img src="src/assets/images/online-form-application-filling-on-600nw-2265375031.webp"/>
-                </div>
-
-            </form>
-            </div>
-          </div>
-    )
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="bg-amber-300 p-6 rounded-lg shadow-lg text-center">
+        <h2 className="text-black text-2xl mb-4">Sign Up</h2>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="first_name"
+            placeholder="First Name"
+            className="w-full p-2 mb-4 rounded-lg"
+            value={formData.first_name}
+            onChange={handleInputChange}
+          />
+          {errors.first_name && (
+            <p className="text-red-700 mt-1">{errors.first_name}</p>
+          )}
+          <input
+            type="text"
+            name="last_name"
+            placeholder="Last Name"
+            className="w-full p-2 mb-4 rounded-lg"
+            value={formData.last_name}
+            onChange={handleInputChange}
+          />
+          {errors.last_name && (
+            <p className="text-red-700 mt-1">{errors.last_name}</p>
+          )}
+          <input
+            type="email"
+            name="email"
+            placeholder="Email Address"
+            className="w-full p-2 mb-4 rounded-lg"
+            value={formData.email}
+            onChange={handleInputChange}
+          />
+          {errors.email && <p className="text-red-700 mt-1">{errors.email}</p>}
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            className="w-full p-2 mb-4 rounded-lg"
+            value={formData.password}
+            onChange={handleInputChange}
+          />
+          {errors.password && (
+            <p className="text-red-700 mt-1">{errors.password}</p>
+          )}
+          <button
+            type="submit"
+            className="bg-red-700 text-black px-4 py-2 rounded-lg"
+          >
+            {" "}
+            Register{" "}
+          </button>
+        </form>
+        <p className="text-black mt-4">
+          Already have an account?{" "}
+          <Link to="/login" className="underline">
+            {" "}
+            Login{" "}
+          </Link>
+        </p>
+      </div>
+    </div>
+  );
 }
-export default Signup
+
+export default Signup;

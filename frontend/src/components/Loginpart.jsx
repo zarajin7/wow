@@ -1,140 +1,97 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-function Loginpart() {
+function Login() {
+  const navigate = useNavigate(); 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-
   const [errors, setErrors] = useState({});
-  const [submitted, setSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
-  const validateForm = () => {
-    let isValid = true;
-    const newErrors = {};
-
-    if (!formData.email) {
-      newErrors.email = "email is required";
-      isValid = false;
-    }
-
-    if (!formData.password) {
-      newErrors.password = "password is required";
-      isValid = false;
-    }
-
-    setErrors(newErrors);
-    return isValid;
+  const validate = () => {
+    let tempErrors = {};
+    if (!formData.email) tempErrors.email = "Email Address is required";
+    if (!formData.password) tempErrors.password = "Password is required";
+    setErrors(tempErrors);
+    return Object.keys(tempErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (validate()) {
+      const url = "http://127.0.0.1:8000/api/login/";
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      };
 
-    console.log(formData);
-    const url = "http://127.0.0.1:8000/api/login/";
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    };
-    fetch(url, options)
-      .then((res) => {
-        console.log(res);
-        if (!res.ok) {
-          return res.json().then((message) => {
-            console.log(message);
-          });
+      try {
+        const response = await fetch(url, options);
+        if (!response.ok) {
+          throw new Error("Failed to authenticate");
         }
-        return res.json();
-      })
-      .then((data) => console.log(data))
-      .catch((error) => console.error("not working:", error));
-    if (validateForm()) {
-      console.log("Form data:", formData);
-      setSubmitted(true);
-    } else {
+        const user = await response.json();
+        console.log("Login successful. User:", user);
+        navigate("/don");
+      } catch (error) {
+        console.error("Error logging in:", error);
+        setErrorMessage("Invalid email or password. Please try again.");
+      }
     }
   };
-
-  const isFormValid = Object.keys(errors).length === 0;
 
   return (
-    <div className="container mx-auto  flex justify-center my-9">
-      <form onSubmit={handleSubmit}>
-        <div className="container mx-auto ">
-          <div className=" container justify-center my-[3em]">
-            <h1 className="text-6xl font-normal">Welcome back! </h1>
-          </div>
-
-          <p>email</p>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="bg-purple-600 p-6 rounded-lg shadow-lg text-center">
+        <h2 className="text-white text-2xl mb-4">Sign In</h2>
+        <form onSubmit={handleSubmit}>
           <input
-            type="text"
-            className="py-3 px-[10em] bg-neutral-100  rounded-full flex-1 shadow-lg"
+            type="email"
             name="email"
-            onChange={handleInputChange}
+            placeholder="Email Address"
+            className="w-full p-2 mb-4 rounded-lg"
+            value={formData.email}
+            onChange={handleChange}
           />
-          {errors.email && (
-            <div className="error text-red-700">{errors.email}</div>
-          )}
-        </div>
-
-        <div>
-          <p>password:</p>
+          {errors.email && <p className="text-red-500 mt-1">{errors.email}</p>}
           <input
-            className="py-3 px-[10em] bg-neutral-100  rounded-full flex-1 shadow-lg"
             type="password"
             name="password"
             placeholder="Password"
-            onChange={handleInputChange}
+            className="w-full p-2 mb-4 rounded-lg"
+            value={formData.password}
+            onChange={handleChange}
           />
           {errors.password && (
-            <div className="error text-red-700">{errors.password}</div>
+            <p className="text-red-500 mt-1">{errors.password}</p>
           )}
-        </div>
-        <div className="my-[3em]">
+          {errorMessage && <p className="text-red-500 mt-1">{errorMessage}</p>}
           <button
             type="submit"
-            disabled={!isFormValid}
-            className="bg-red-600 py-3  px-[15em] rounded-full shadow-lg text-black font-bold"
+            className="bg-gray-800 text-white px-8 py-2 rounded-lg"
           >
             Login
           </button>
-        </div>
-        <div className="justify-center text-center">
-          <p>Or</p>
-        </div>
-
-        <div className="flex justify-center">
-          <img
-            className="w-[10vh] outline-1"
-            src="src/assets/wow_ pics/google.jpg"
-          />
-          <img
-            className="w-[10vh]"
-            src="src/assets/wow_ pics/facebook-color-icon-2048x2048-bfly1vxr.png"
-          />
-          <img
-            className="w-[10vh]"
-            src="src/assets/wow_ pics/circle-linkedin-512.webp"
-          />
-        </div>
-        <div className="flex text-center  text-[20px] my-2">
-          <p>Dont Have An Account ?</p>
-          <a href="/auth" className="text-amber-300">
-            Sign Up
-          </a>
-        </div>
-        <div className="flex justify-end absolute top-8 right-10 z-[-1]">
-          <img src="src/assets/images/istockphoto-1323623361-612x612.jpg" />
-        </div>
-      </form>
+        </form>
+        <p className="text-white mt-4">
+          Don’t have an account?{" "}
+          <Link to="/signup" className="underline">
+            Register
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }
-export default Loginpart;
+
+export default Login;
