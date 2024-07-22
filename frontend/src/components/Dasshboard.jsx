@@ -27,7 +27,7 @@ const Dasshboard = ({ organizations }) => {
             </Link>
           </div>
         </div>
-      </div>
+     </div>
     </div>
   );
 };
