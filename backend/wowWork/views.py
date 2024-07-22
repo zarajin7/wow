@@ -7,8 +7,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.hashers import check_password
-from .models import Donation, Activity,CustomUser,Testimonial
-from .serializers import  RegistrationSerializer, DonationSerializer, ActivitySerializer, LoginSerializer,TestimonialSerializer
+from .models import Donation, Activity,CustomUser,Testimonial,Campaign, Donation
+from .serializers import  RegistrationSerializer, DonationSerializer, ActivitySerializer, LoginSerializer,TestimonialSerializer,CampaignSerializer, DonationSerializer
+
 # Create your views here. 
 
 class RegistrationView(APIView):
@@ -78,6 +79,29 @@ class ActivityAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class CampaignListView(APIView):
+    def get(self, request, *args, **kwargs):
+        campaigns = Campaign.objects.all()
+        serializer = CampaignSerializer(campaigns, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    def post(self, request, *args, **kwargs):
+        serializer = CampaignSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class DonationCreateView(APIView):
+    def post(self, request, *args, **kwargs):
+        serializer = DonationSerializer(data=request.data)
+        if serializer.is_valid():
+            # Save donation
+            donation = serializer.save()
+            # Update campaign progress
+            campaign = Campaign.objects.get(id=request.data['campaign'])
+            campaign.collected += float(request.data['amount'])
+            campaign.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ActivityDetailAPIView(APIView):
     def get_object(self, id, **extra_kwargs):
@@ -85,6 +109,7 @@ class ActivityDetailAPIView(APIView):
             return Activity.objects.get(id=id)
         except Activity.DoesNotExist:
             raise Http404
+
 
     def get(self, request, id, format=None, **extra_kwargs):
         activity = self.get_object(id)

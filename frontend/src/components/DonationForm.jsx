@@ -1,24 +1,46 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const DonationPage = () => {
   const [amount, setAmount] = useState(0);
   const [donationType, setDonationType] = useState("One-Time");
   const [donationPurpose, setDonationPurpose] = useState("Food Aid");
   const [coverFees, setCoverFees] = useState(false);
+  const [campaigns, setCampaigns] = useState([]);
+  const [selectedCampaign, setSelectedCampaign] = useState("");
+
+  useEffect(() => {
+    // Fetch campaigns from the API
+    const fetchCampaigns = async () => {
+      try {
+        const response = await axios.get("http://localhost:8000/api/campaigns/");
+        setCampaigns(response.data);
+      } catch (error) {
+        console.error("Error fetching campaigns:", error);
+      }
+    };
+
+    fetchCampaigns();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await post(
+      const response = await axios.post(
         "http://localhost:8000/api/donations/",
         {
           amount,
           donation_type: donationType,
           purpose: donationPurpose,
           cover_fees: coverFees,
+          campaign_id: selectedCampaign,
         }
       );
       console.log(response.data);
+      // Update the progress of the campaign
+      await axios.put(`http://localhost:8000/api/campaigns/${selectedCampaign}/`, {
+        collected: response.data.new_collected_amount,
+      });
       alert("Donation successful!");
     } catch (error) {
       console.error(error);
@@ -34,7 +56,7 @@ const DonationPage = () => {
       >
         <div className="flex justify-center mb-4">
           <img
-            src="src/assets/wow_ pics/WOW.svg"
+            src="src/assets/wow_pics/WOW.svg"
             alt="Logo"
             className="h-20 object-cover rounded-full"
           />
@@ -46,6 +68,25 @@ const DonationPage = () => {
           Your support provides education scholarships, basic needs, and
           community development activities in Kitale.
         </p>
+        <div className="mb-4">
+          <label className="block text-sm font-medium mb-1" htmlFor="campaign">
+            Select Campaign
+          </label>
+          <select
+            id="campaign"
+            value={selectedCampaign}
+            onChange={(e) => setSelectedCampaign(e.target.value)}
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          >
+            <option value="">Select a campaign</option>
+            {campaigns.map((campaign) => (
+              <option key={campaign.id} value={campaign.id}>
+                {campaign.name}
+              </option>
+            ))}
+          </select>
+        </div>
         <div className="flex justify-center mb-4">
           <button
             type="button"
@@ -83,6 +124,7 @@ const DonationPage = () => {
             onChange={(e) => setAmount(e.target.value)}
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Enter amount"
+            required
           />
         </div>
         <div className="mb-4">
@@ -91,9 +133,7 @@ const DonationPage = () => {
             onChange={(e) => setDonationPurpose(e.target.value)}
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-700"
           >
-            <option value="Make donation anonymous">
-              Make donation anonymous
-            </option>
+            <option value="Make donation anonymous">Make donation anonymous</option>
             <option value="Food Aid">Food Aid</option>
             <option value="Scholarship">Scholarship</option>
             <option value="Medical Support">Medical Support</option>
@@ -102,13 +142,9 @@ const DonationPage = () => {
             <option value="Basic Agriculture">Basic Agriculture</option>
             <option value="Catering">Catering</option>
             <option value="Business Skills">Business Skills</option>
-            <option value="Hair & Beauty Training">
-              Hair & Beauty Training
-            </option>
+            <option value="Hair & Beauty Training">Hair & Beauty Training</option>
             <option value="Plan for Tailoring">Plan for Tailoring</option>
-            <option value="Introduction to Computers">
-              Introduction to Computers
-            </option>
+            <option value="Introduction to Computers">Introduction to Computers</option>
             <option value="Social, Sports & Environmental Activities">
               Social, Sports & Environmental Activities
             </option>
@@ -132,7 +168,7 @@ const DonationPage = () => {
             className="bg-amber-300 text-white px-4 py-2 rounded-lg flex items-center justify-center"
           >
             <img
-              src="src/assets/wow_ pics/15-facts-about-paypal-1694962132.jpg"
+              src="src/assets/wow_pics/15-facts-about-paypal-1694962132.jpg"
               alt="PayPal"
               className="w-6 h-6 mr-2"
             />{" "}

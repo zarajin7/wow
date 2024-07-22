@@ -83,6 +83,24 @@ class Activity(models.Model):
     def __str__(self):
         return self.title
 
+class Campaign(models.Model):
+    name = models.CharField(max_length=255)
+    target = models.DecimalField(max_digits=10, decimal_places=2)
+    collected = models.DecimalField(max_digits=10, decimal_places=2)
+    image = models.URLField()
+
+    def __str__(self):
+        return self.name        
+
+class Donation(models.Model):
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    donation_type = models.CharField(max_length=50, choices=[('One-Time', 'One-Time'), ('Monthly', 'Monthly'), ('Yearly', 'Yearly')])
+    purpose = models.CharField(max_length=255)
+    cover_fees = models.BooleanField(default=False)
+    campaign = models.ForeignKey(Campaign, related_name='donations', on_delete=models.CASCADE)
+    def __str__(self):
+        return f"Donation of ${self.amount} to {self.campaign.name}"
+
 # Testimonial model
 class Testimonial(models.Model):
     name = models.CharField(max_length=100)
