@@ -1,8 +1,5 @@
-
 import React, { useState, useEffect } from "react";
 import QRCode from "qrcode.react";
-import React, { useState, useEffect } from "react";
-import axios from "axios";
 
 const DonationPage = () => {
   const [amount, setAmount] = useState(0);
@@ -13,14 +10,13 @@ const DonationPage = () => {
   const [selectedCampaign, setSelectedCampaign] = useState("");
   const [qrCodeUrl, setQrCodeUrl] = useState("");
 
-
   useEffect(() => {
     // Fetch campaigns from the API
     const fetchCampaigns = async () => {
       try {
-
-        const response = await axios.get("http://localhost:8000/api/campaigns/");
-        setCampaigns(response.data);
+        const response = await fetch("http://localhost:8000/api/campaigns/");
+        const data = await response.json();
+        setCampaigns(data);
       } catch (error) {
         console.error("Error fetching campaigns:", error);
       }
@@ -32,22 +28,37 @@ const DonationPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:8000/api/donations/",
+      const donationResponse = await fetch(
+        "http://127.0.0.1:8000/api/donations/",
         {
-          amount,
-          donation_type: donationType,
-          purpose: donationPurpose,
-          cover_fees: coverFees,
-
-          campaign_id: selectedCampaign,
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            amount,
+            donation_type: donationType,
+            purpose: donationPurpose,
+            cover_fees: coverFees,
+            campaign_id: selectedCampaign,
+          }),
         }
       );
-      console.log(response.data);
+
+      const donationData = await donationResponse.json();
+      console.log(donationData);
+
       // Update the progress of the campaign
-      await axios.put(`http://localhost:8000/api/campaigns/${selectedCampaign}/`, {
-        collected: response.data.new_collected_amount,
+      await fetch(`http://localhost:8000/api/campaigns/${selectedCampaign}/`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          collected: donationData.new_collected_amount,
+        }),
       });
+
       alert("Donation successful!");
     } catch (error) {
       console.error("Donation failed:", error);
@@ -140,7 +151,9 @@ const DonationPage = () => {
             onChange={(e) => setDonationPurpose(e.target.value)}
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-700"
           >
-            <option value="Make donation anonymous">Make donation anonymous</option>
+            <option value="Make donation anonymous">
+              Make donation anonymous
+            </option>
             <option value="Food Aid">Food Aid</option>
             <option value="Scholarship">Scholarship</option>
             <option value="Medical Support">Medical Support</option>
@@ -149,9 +162,13 @@ const DonationPage = () => {
             <option value="Basic Agriculture">Basic Agriculture</option>
             <option value="Catering">Catering</option>
             <option value="Business Skills">Business Skills</option>
-            <option value="Hair & Beauty Training">Hair & Beauty Training</option>
+            <option value="Hair & Beauty Training">
+              Hair & Beauty Training
+            </option>
             <option value="Plan for Tailoring">Plan for Tailoring</option>
-            <option value="Introduction to Computers">Introduction to Computers</option>
+            <option value="Introduction to Computers">
+              Introduction to Computers
+            </option>
             <option value="Social, Sports & Environmental Activities">
               Social, Sports & Environmental Activities
             </option>
